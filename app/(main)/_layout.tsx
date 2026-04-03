@@ -1,5 +1,5 @@
-import { Stack } from "expo-router";
-import { Redirect } from "expo-router";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { Redirect, Tabs } from "expo-router";
 import { AppLoadingView } from "@/components/AppLoadingView";
 import { useAuthStore } from "@/stores/auth-store";
 import { colors } from "@/theme/tokens";
@@ -16,37 +16,37 @@ export default function MainLayout() {
   }
 
   return (
-    <Stack
+    <Tabs
       screenOptions={{
-        headerShown: true,
-        headerStyle: {
-          backgroundColor: colors.background,
-        },
-        headerShadowVisible: false,
-        headerTintColor: colors.primary,
-        headerTitleStyle: {
-          fontWeight: "700",
-          fontSize: 17,
-          color: colors.foreground,
-        },
-        contentStyle: {
-          backgroundColor: colors.background,
+        headerShown: false,
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.muted,
+        tabBarStyle: {
+          backgroundColor: colors.card,
+          borderTopColor: colors.border,
         },
       }}
     >
-      <Stack.Screen name="index" options={{ title: "测试列表" }} />
-      <Stack.Screen name="mbti/index" options={{ title: "MBTI 介绍" }} />
-      <Stack.Screen name="mbti/test" options={{ title: "MBTI 答题" }} />
-      <Stack.Screen name="mbti/result" options={{ title: "MBTI 结果" }} />
-      <Stack.Screen name="mbti/history" options={{ title: "MBTI 历史" }} />
-      <Stack.Screen name="city-match/index" options={{ title: "城市匹配介绍" }} />
-      <Stack.Screen name="city-match/test" options={{ title: "城市匹配答题" }} />
-      <Stack.Screen name="city-match/result" options={{ title: "城市匹配结果" }} />
-      <Stack.Screen name="city-match/history" options={{ title: "城市匹配历史" }} />
-      <Stack.Screen name="cosmic-essence/index" options={{ title: "宇宙精神原色" }} />
-      <Stack.Screen name="cosmic-essence/test" options={{ title: "宇宙精神原色" }} />
-      <Stack.Screen name="cosmic-essence/result" options={{ title: "你的精神原色" }} />
-      <Stack.Screen name="profile" options={{ title: "个人中心" }} />
-    </Stack>
+      <Tabs.Screen
+        name="(home)"
+        options={{
+          title: "测试首页",
+          tabBarLabel: "测试首页",
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons name={focused ? "home" : "home-outline"} size={size ?? 24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="(mine)"
+        options={{
+          title: "我的",
+          tabBarLabel: "我的",
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons name={focused ? "person" : "person-outline"} size={size ?? 24} color={color} />
+          ),
+        }}
+      />
+    </Tabs>
   );
 }
