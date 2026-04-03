@@ -1,5 +1,5 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Redirect, Tabs } from "expo-router";
+import { Tabs } from "expo-router";
 import { AppLoadingView } from "@/components/AppLoadingView";
 import { useAuthStore } from "@/stores/auth-store";
 import { colors } from "@/theme/tokens";
@@ -9,10 +9,6 @@ export default function MainLayout() {
 
   if (status === "loading") {
     return <AppLoadingView />;
-  }
-
-  if (status !== "authenticated") {
-    return <Redirect href="/(auth)/login" />;
   }
 
   return (

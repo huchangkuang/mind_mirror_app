@@ -9,9 +9,5 @@ export default function IndexScreen() {
     return <AppLoadingView />;
   }
 
-  if (status === "authenticated") {
-    return <Redirect href="/(main)" />;
-  }
-
-  return <Redirect href="/(auth)/login" />;
+  return <Redirect href="/(main)" />;
 }

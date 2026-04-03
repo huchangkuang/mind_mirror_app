@@ -101,5 +101,11 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 setHttpAuthHandlers({
   getAccessToken: () => useAuthStore.getState().accessToken,
   refreshSession: () => useAuthStore.getState().refreshSession(),
-  onAuthFailed: () => useAuthStore.getState().clearSession(),
+  onAuthFailed: () => {
+    const s = useAuthStore.getState();
+    if (s.status === "unauthenticated" && !s.accessToken && !s.refreshToken) {
+      return;
+    }
+    return s.clearSession();
+  },
 });

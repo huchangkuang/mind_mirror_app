@@ -110,6 +110,7 @@ httpClient.interceptors.response.use(
     const refreshOk = await refreshPromise;
 
     if (!refreshOk) {
+      // 访客无 refresh token 时 refresh 失败属预期；onAuthFailed 在 auth-store 中对纯访客会话短路，避免无意义 clear
       await authHandlers.onAuthFailed();
       throw normalizeApiError(error);
     }

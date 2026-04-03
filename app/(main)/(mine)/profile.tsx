@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { z } from "zod";
@@ -25,7 +26,10 @@ const passwordSchema = z
   });
 
 export default function ProfileScreen() {
+  const router = useRouter();
+  const status = useAuthStore((state) => state.status);
   const logout = useAuthStore((state) => state.logout);
+  const isAuthed = status === "authenticated";
   const [nicknameInput, setNicknameInput] = useState("");
   const [nicknameError, setNicknameError] = useState("");
   const [nicknameMessage, setNicknameMessage] = useState("");
@@ -39,11 +43,13 @@ export default function ProfileScreen() {
   const meQuery = useQuery({
     queryKey: ["profile", "me"],
     queryFn: fetchMe,
+    enabled: isAuthed,
   });
 
   const summaryQuery = useQuery({
     queryKey: ["profile", "history-summary"],
     queryFn: fetchProfileHistorySummary,
+    enabled: isAuthed,
   });
 
   useEffect(() => {
@@ -105,6 +111,28 @@ export default function ProfileScreen() {
       newPassword: parsed.data.newPassword,
     });
   };
+
+  if (!isAuthed) {
+    return (
+      <ScreenBackground>
+        <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+          <Text style={styles.lead}>登录后可同步账号信息、查看测评历史摘要并管理密码。</Text>
+          <View style={styles.card}>
+            <Text style={styles.sectionTitle}>访客模式</Text>
+            <Text style={styles.label}>
+              不登录也可以使用「测试首页」的测评入口。需要账号与历史数据时，请登录或注册。
+            </Text>
+            <Pressable style={styles.secondaryButton} onPress={() => router.push("/(auth)/login")}>
+              <Text style={styles.secondaryButtonText}>登录</Text>
+            </Pressable>
+            <Pressable style={styles.outlineButton} onPress={() => router.push("/(auth)/register")}>
+              <Text style={styles.outlineButtonText}>注册账号</Text>
+            </Pressable>
+          </View>
+        </ScrollView>
+      </ScreenBackground>
+    );
+  }
 
   return (
     <ScreenBackground>
@@ -243,6 +271,21 @@ const styles = StyleSheet.create({
   },
   secondaryButtonText: {
     color: "#fff",
+    fontWeight: "700",
+    fontSize: 15,
+  },
+  outlineButton: {
+    alignSelf: "flex-start",
+    marginTop: space.sm,
+    backgroundColor: "transparent",
+    borderRadius: radii.sm,
+    borderWidth: 1,
+    borderColor: colors.border,
+    paddingHorizontal: space.md,
+    paddingVertical: space.sm,
+  },
+  outlineButtonText: {
+    color: colors.foreground,
     fontWeight: "700",
     fontSize: 15,
   },

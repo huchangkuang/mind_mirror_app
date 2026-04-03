@@ -1,4 +1,4 @@
-import { Link, Redirect, useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { ScreenBackground } from "@/components/ScreenBackground";
@@ -14,10 +14,6 @@ export default function MainIndexScreen() {
     queryFn: fetchAssessments,
   });
 
-  if (status !== "authenticated") {
-    return <Redirect href="/(auth)/login" />;
-  }
-
   return (
     <ScreenBackground>
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
@@ -28,6 +24,16 @@ export default function MainIndexScreen() {
         {isError && (
           <View style={styles.errorBox}>
             <Text style={styles.errorText}>加载失败，请重试</Text>
+            {status !== "authenticated" && (
+              <>
+                <Text style={[styles.muted, { marginTop: space.xs }]}>
+                  若列表需要登录后才能访问，请先登录再试。
+                </Text>
+                <Link href="/(auth)/login" style={styles.errorLoginLink}>
+                  去登录
+                </Link>
+              </>
+            )}
             <Pressable style={styles.retryButton} onPress={() => refetch()}>
               <Text style={styles.retryButtonText}>重试</Text>
             </Pressable>
@@ -158,6 +164,12 @@ const styles = StyleSheet.create({
   errorText: {
     color: colors.destructive,
     fontWeight: "600",
+  },
+  errorLoginLink: {
+    marginTop: space.xs,
+    color: colors.primary,
+    fontWeight: "700",
+    fontSize: 15,
   },
   retryButton: {
     alignSelf: "flex-start",
