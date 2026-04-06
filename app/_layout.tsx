@@ -3,9 +3,6 @@ import { useEffect } from "react";
 import { AppErrorBoundary } from "@/components/AppErrorBoundary";
 import { AppProviders } from "@/components/AppProviders";
 import { useAuthStore } from "@/stores/auth-store";
-import { initSentry } from "@/utils/sentry";
-
-initSentry();
 
 export function ErrorBoundary(props: Parameters<typeof AppErrorBoundary>[0]) {
   return <AppErrorBoundary {...props} />;

@@ -25,5 +25,5 @@
 
 - Affected code: `app/` 路由页面、`src/features/*` 业务模块、`src/api/*` 请求与鉴权层、`src/stores/*` 状态管理、`src/components/*` 基础组件。
 - APIs: 复用并对齐 `mind_mirror_api` 已有认证与测评相关接口，不新增独立移动端后端接口。
-- Dependencies: 引入/确认 `expo-router`、`zustand`、`axios`、`expo-secure-store`、`react-hook-form`、`zod`、`@tanstack/react-query`、Sentry 相关依赖。
+- Dependencies: 引入/确认 `expo-router`、`zustand`、`axios`、`expo-secure-store`、`react-hook-form`、`zod`、`@tanstack/react-query` 相关依赖。
 - Systems: 影响 iOS/Android 双端首版发布链路与后续功能扩展节奏。

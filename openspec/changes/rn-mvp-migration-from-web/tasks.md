@@ -1,7 +1,7 @@
 ## 1. 工程与基础依赖初始化
 
 - [x] 1.1 初始化/校准 Expo + React Native 工程结构，创建 `app/` 与 `src/` 分层目录（`api`、`stores`、`features`、`components`、`hooks`、`utils`、`types`）。
-- [x] 1.2 集成并配置核心依赖：`expo-router`、`zustand`、`axios`、`expo-secure-store`、`react-hook-form`、`zod`、`@tanstack/react-query`、Sentry。
+- [x] 1.2 集成并配置核心依赖：`expo-router`、`zustand`、`axios`、`expo-secure-store`、`react-hook-form`、`zod`、`@tanstack/react-query`。
 - [x] 1.3 建立基础路由壳与导航分组（未登录区/已登录区），并提供全局错误边界与加载状态容器。
 
 ## 2. API 客户端与鉴权链路
@@ -36,7 +36,7 @@
 
 ## 6. 稳定性、验收与发布准备
 
-- [x] 6.1 接入 Sentry 基础监控（全局异常、关键请求失败打点入口）。
+- [x] 6.1 全局错误边界与基础可观测（AppErrorBoundary 等）。
 - [ ] 6.2 执行 iOS/Android 双端冒烟测试：认证、测试列表、MBTI、城市匹配、个人中心全链路。
 - [x] 6.3 修复阻塞级问题并形成 MVP 验收清单，确认本期非目标未误入范围。
 - [x] 6.4 预留后续 Detox E2E 与性能优化任务占位，作为下一期 backlog。
