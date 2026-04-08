@@ -33,7 +33,9 @@ export function setHttpAuthHandlers(handlers: Partial<AuthHandlers>) {
   authHandlers = { ...authHandlers, ...handlers };
 }
 
-const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL ?? "http://localhost:3001/api/v1";
+/** 默认走线上；本地开发在 .env 中设置 EXPO_PUBLIC_API_BASE_URL 指向本机 */
+const API_BASE_URL =
+  process.env.EXPO_PUBLIC_API_BASE_URL ?? "https://mmirror.qiexuxing.top/api/v1";
 
 export const httpClient = axios.create({
   baseURL: API_BASE_URL,
