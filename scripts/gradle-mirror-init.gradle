@@ -1,0 +1,18 @@
+/**
+ * 本机 Gradle 解析依赖时若直连 Maven Central / Google 出现 TLS 握手失败（常见于国内网络），
+ * 通过 --init-script 注入，使各子模块 buildscript 优先走阿里云镜像。
+ *
+ * 使用方式：npm run android:assemble（已带 --init-script），或：
+ *   cd android && ./gradlew assembleRelease --init-script ../scripts/gradle-mirror-init.gradle
+ */
+gradle.beforeProject { project ->
+  if (project.parent == null) {
+    return
+  }
+  project.buildscript.repositories {
+    maven { url 'https://maven.aliyun.com/repository/google' }
+    maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+    maven { url 'https://maven.aliyun.com/repository/public' }
+    maven { url 'https://maven.aliyun.com/repository/central' }
+  }
+}
